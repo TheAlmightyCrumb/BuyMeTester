@@ -6,7 +6,7 @@ import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class WebPage {
+public class WebPage implements CanInteract {
     private WebDriver driver = DriverSingleton.getInstance();
 
     public void clickElement(By locator) {
@@ -25,7 +25,15 @@ public class WebPage {
         return findWebElement(locator).isDisplayed();
     }
 
-    public Rectangle getElementsRect(By locator) {
+    public String getElementText(By locator) {
+        return findWebElement(locator).getText();
+    }
+
+    public String getElementValue(By locator) {
+        return findWebElement(locator).getAttribute("value");
+    }
+
+    public Rectangle getElementRect(By locator) {
         return findWebElement(locator).getRect();
     }
 
