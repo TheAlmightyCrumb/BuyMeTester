@@ -1,5 +1,10 @@
 package defaults;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -14,6 +19,8 @@ public class Main {
 
     private static WebDriver driver;
     private static String baseUrl;
+    private static ExtentReports extent= new ExtentReports();
+    private static ExtentTest test = extent.createTest("MyFirstTest", "Sample description");
 
     @BeforeClass
     public void init() {
@@ -27,14 +34,21 @@ public class Main {
         }
         driver = DriverSingleton.getInstance();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter("src/extent.html");
+        extent.attachReporter(htmlReporter);
     }
 
 //    @Test
 //    public void stamTest() {
 //        driver.get(baseUrl);
 //        System.out.println("- - - - -");
-//        System.out.println(driver.getTitle());
+//        try {
+//            System.out.println(driver.findElement(By.id("Mate")));
+//        } catch (NoSuchElementException e) {
+//            e.printStackTrace();
+//            System.out.println("NO SUCH ELEMENT EXCEPTION WAS THROWN");
+//        }
 //        System.out.println("- - - - -");
 //    }
 
@@ -52,5 +66,6 @@ public class Main {
     @AfterClass
     public static void tearDown() {
         driver.quit();
+        extent.flush();
     }
 }

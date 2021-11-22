@@ -4,7 +4,7 @@ import defaults.Constants;
 
 public class RegisterPage extends WebPage {
 
-    public static String getPageMatch() {
+    public String getPageMatch() {
         return "?modal=login";
     }
 

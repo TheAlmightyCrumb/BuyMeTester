@@ -1,10 +1,11 @@
 package pages;
 
 import defaults.DriverSingleton;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+
+import java.io.File;
+import java.io.IOException;
 
 public class WebPage implements CanInteract {
     private WebDriver driver = DriverSingleton.getInstance();
@@ -37,7 +38,23 @@ public class WebPage implements CanInteract {
         return findWebElement(locator).getRect();
     }
 
+    public String takeScreenshot(String filePath, String format) {
+        TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+        File screenShotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        File destinationFile = new File(filePath + "." + format);
+        try {
+            FileUtils.copyFile(screenShotFile, destinationFile);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return destinationFile.getName();
+    }
+
     private WebElement findWebElement(By locator) {
-        return driver.findElement(locator);
+        try {
+            return driver.findElement(locator);
+        } catch(NoSuchElementException e) {
+        }
+        return null;
     }
 }
