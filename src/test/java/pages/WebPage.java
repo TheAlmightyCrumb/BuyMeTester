@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class WebPage implements CanInteract {
-    private WebDriver driver = DriverSingleton.getInstance();
+    private WebDriver driver = DriverSingleton.getDriver();
 
     public void clickElement(By locator) {
         findWebElement(locator).click();

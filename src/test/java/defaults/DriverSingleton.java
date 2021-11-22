@@ -11,7 +11,7 @@ public class DriverSingleton {
 
     private DriverSingleton() {}
 
-    public static WebDriver getInstance() {
+    public static WebDriver getDriver() {
         if (driver == null) {
             try {
                 ArrayList<String> keyNames = new ArrayList<>();

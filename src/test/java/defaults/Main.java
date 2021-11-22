@@ -3,8 +3,6 @@ package defaults;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -32,7 +30,7 @@ public class Main {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        driver = DriverSingleton.getInstance();
+        driver = DriverSingleton.getDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter("src/extent.html");
