@@ -13,10 +13,15 @@ import java.util.List;
 
 public class WebPage implements CanInteract {
     private final WebDriver driver = DriverSingleton.getDriver();
+    private final JavascriptExecutor js = (JavascriptExecutor) driver;
     private final ExtentTest test;
 
     public WebPage(ExtentTest test) {
         this.test = test;
+    }
+
+    public void executeJavaScript(String script) {
+        js.executeScript(script);
     }
 
     public void clickElement(By locator) {
@@ -43,6 +48,8 @@ public class WebPage implements CanInteract {
         return findWebElement(locator).getAttribute("value");
     }
 
+    public String getElementValue(WebElement element) { return element.getAttribute("value"); }
+
     public Rectangle getElementRect(By locator) {
         return findWebElement(locator).getRect();
     }
@@ -64,7 +71,7 @@ public class WebPage implements CanInteract {
             return driver.findElements(locator);
         } catch(NoSuchElementException e) {
             e.printStackTrace();
-            test.fail(e.getMessage(),
+            test.warning(e.getMessage(),
                     MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot(Utils.getCurrentTimestamp() + "NoSuchElement", "png"))
                             .build());
         }
@@ -76,7 +83,7 @@ public class WebPage implements CanInteract {
             return driver.findElement(locator);
         } catch(NoSuchElementException e) {
             e.printStackTrace();
-            test.fail(e.getMessage(),
+            test.warning(e.getMessage(),
                     MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot(Utils.getCurrentTimestamp() + "NoSuchElement", "png"))
                     .build());
         }

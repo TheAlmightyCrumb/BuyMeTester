@@ -7,27 +7,27 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class HomePage extends WebPage {
+public class ResultsPage extends WebPage{
 
-    private final Random rand = new Random();
-
-    public HomePage(ExtentTest test) {
+    public ResultsPage(ExtentTest test) {
         super(test);
     }
 
-    public void pickOptionsFromSelects() {
+    public ArrayList<String> getOptionsValuesFromSelects() {
         List<WebElement> selects = findWebElements(Constants.FILTERS_SELECTS);
         executeJavaScript("document.querySelectorAll(\"" + Constants.FILTERS_SELECTS_CSS_LOCATOR + "\").forEach(elem => { elem.style.display = \"initial\" });");
+        ArrayList<String> chosenValues = new ArrayList<>();
         for (WebElement selectElement: selects) {
             Select selectObject = new Select(selectElement);
-            int randomIndex = rand.nextInt(selectObject.getOptions().size() - 1) + 1;
-            selectObject.selectByIndex(randomIndex);
+            String chosenOptionValue = selectObject.getFirstSelectedOption().getAttribute("value");
+            chosenValues.add(chosenOptionValue);
         }
+        return chosenValues;
     }
 
-    public void clickFindGift() {
-        clickElement(Constants.FIND_GIFT_BUTTON);
+    public void clickBusinessCard() {
+        clickElement(Constants.BUSINESS_CARD);
     }
+
 }

@@ -26,13 +26,28 @@ public class Constants {
 
     // USER DETAILS
     public static final String INPUT_FIRST_NAME = "Sagiv";
-    public static final String INPUT_EMAIL = "sagivon18@gmail.com";
+    public static final String INPUT_EMAIL = dotenv.get("BUYME_EMAIL");
     public static final String INPUT_PASSWORD = dotenv.get("BUYME_PASS");
     public static final String INPUT_CONFIRM_PASS = dotenv.get("BUYME_PASS");
 
-
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
     /* Homepage Locators */
+
     public static final By FILTERS_SELECTS = By.cssSelector("form.form.ember-view select");
     public static final String FILTERS_SELECTS_CSS_LOCATOR = "form.form.ember-view select";
     public static final By FIND_GIFT_BUTTON = By.cssSelector("form.form.ember-view a.ui-btn.search");
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* Results and Business Locators */
+
+    public static final By BUSINESS_CARD = By.cssSelector("div.application-main div.ember-view.bm-product-card");
+    public static final By BUSINESS_GIFT_INPUT = By.cssSelector("div.ember-view.bm-gift-card input.ember-text-field");
+    public static final By BUSINESS_GIFT_BUTTON = By.cssSelector("div.ember-view.bm-gift-card button.ember-view.bm-btn");
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* Sender and Receiver Information Page Locators */
+
+    public static final By FOR_SOMEONE_ELSE_BUTTON = By.cssSelector("div.button-forSomeone");
+    public static final By RECEIVER_NAME_INPUT = By.cssSelector("label#friendName input.ember-text-field");
+    public static final By EVENT_SELECT_WRAPPER = By.cssSelector("div.selected-name");
 }
