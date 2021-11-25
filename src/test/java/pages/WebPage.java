@@ -56,7 +56,7 @@ public class WebPage implements CanInteract {
         return findWebElement(locator).getAttribute("value");
     }
 
-    public String getElementValue(WebElement element) { return element.getAttribute("value"); }
+    public String getElementAttribute(By locator, String attribute) { return findWebElement(locator).getAttribute(attribute); }
 
     public Rectangle getElementRect(By locator) {
         return findWebElement(locator).getRect();

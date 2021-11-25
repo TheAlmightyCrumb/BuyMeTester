@@ -31,7 +31,6 @@ public class SummaryPage extends WebPage {
         chosenOption = eventOptions.get(2);
         if (random)
             chosenOption = eventOptions.get(randomIndex);
-        System.out.println(chosenOption.getAttribute("value"));
         executeJavaScript("arguments[0].scrollIntoView();", chosenOption);
         chosenOption.click();
     }

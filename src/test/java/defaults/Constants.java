@@ -68,4 +68,9 @@ public class Constants {
     public static final String ADD_MEDIA_PATH = "/Users/batman/IntelliJProjects/BuyMeTester/MediaToAdd.png";
     public static final String RECEIVER_EMAIL = "Moshik@mafia.mate";
     public static final String SENDER_NAME = "George";
+
+    /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+    /* Loading Screen */
+
+    public static final By LOADING_SPINNER_DOT = By.cssSelector("div.spinner div.bounce1");
 }

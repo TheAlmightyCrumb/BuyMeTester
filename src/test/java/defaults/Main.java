@@ -180,6 +180,17 @@ public class Main {
         }
     }
 
+    @Test
+    public void extraTest() {
+        ExtentTest extraTestNode = test.createNode("Extras Test");
+        RegisterPage registerPage = new RegisterPage(extraTestNode);
+        driver.get(baseUrl + registerPage.getPageMatch());
+        registerPage.clickLogin();
+        String errorMessage = registerPage.getElementAttribute(Constants.LOGIN_EMAIL, "data-parsley-required-message");
+        System.out.println(errorMessage);
+        extraTestNode.info("Error message for no login credentials: " + errorMessage);
+    }
+
     @AfterClass
     public static void tearDown() {
         driver.quit();
