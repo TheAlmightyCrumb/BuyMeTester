@@ -8,10 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import pages.BusinessPage;
-import pages.HomePage;
-import pages.RegisterPage;
-import pages.ResultsPage;
+import pages.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +37,8 @@ public class Main {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         ExtentSparkReporter spark = new ExtentSparkReporter("./spark.html");
         extent.attachReporter(spark);
+        extent.setSystemInfo("OS", "macOS 11.6");
+        test.assignAuthor("TheAlmightyCrumb");
     }
 
 
@@ -90,7 +89,7 @@ public class Main {
         String target = baseUrl;
         driver.get(target);
         searchGiftTestNode.info("Browsing to: " + target);
-        homePage.pickOptionsFromSelects();
+        homePage.pickOptionsFromSelects(false);
         searchGiftTestNode.pass("Picked random options from filters successfully");
         try {
             homePage.clickFindGift();
@@ -140,6 +139,44 @@ public class Main {
         } finally {
             businessPage.pickGiftOption();
             businessPageTestNode.pass("Picked price amount successfully");
+        }
+    }
+
+    @Test(dependsOnMethods = { "resultsPageTest" })
+    public void summaryPageTest() {
+        ExtentTest summaryPageTestNode = test.createNode("Summary Page Test");
+        SummaryPage summaryPage = new SummaryPage(summaryPageTestNode);
+        try {
+            summaryPage.clickSomeoneElse();
+            summaryPageTestNode.pass("Clicked 'for someone else'");
+            summaryPage.fillReceiverName();
+            summaryPageTestNode.pass("Filled receiver's name");
+            String receiverNameInputValue = summaryPage.getElementValue(Constants.RECEIVER_NAME_INPUT);
+            summaryPage.pickEventFromSelect(false);
+            summaryPageTestNode.pass("Selected option from events list");
+            summaryPage.fillCustomBlessing();
+            summaryPageTestNode.pass("Filled in a great blessing");
+            summaryPage.addMedia();
+            summaryPageTestNode.pass("Added media");
+            summaryPage.clickContinue();
+            summaryPageTestNode.pass("Continue to next stage");
+            summaryPage.clickSendNow();
+            summaryPageTestNode.pass("Clicked 'send now'");
+            summaryPage.chooseSendByEmail();
+            summaryPageTestNode.pass("Chosen email as sending method");
+            summaryPage.fillReceiverEmail();
+            summaryPageTestNode.pass("Filled receiver's email");
+            summaryPage.fillSenderName();
+            summaryPageTestNode.pass("Filled sender's name");
+            String senderNameInputValue = summaryPage.getElementValue(Constants.SENDER_NAME_INPUT);
+            summaryPage.clickContinue();
+            summaryPageTestNode.pass("Continue to next stage");
+            Assert.assertEquals(receiverNameInputValue, Constants.RECEIVER_NAME);
+            Assert.assertEquals(senderNameInputValue, Constants.SENDER_NAME);
+            summaryPageTestNode.pass("Filled sender and receiver details correctly");
+        } catch(Exception e) {
+            e.printStackTrace();
+            summaryPageTestNode.fail("Something went wrong\n" + e.getMessage());
         }
     }
 

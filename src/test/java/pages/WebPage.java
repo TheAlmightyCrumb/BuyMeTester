@@ -24,12 +24,20 @@ public class WebPage implements CanInteract {
         js.executeScript(script);
     }
 
+    public void executeJavaScript(String script, Object args) {
+        js.executeScript(script, args);
+    }
+
     public void clickElement(By locator) {
         findWebElement(locator).click();
     }
 
     public void sendKeysToElement(By locator, String keys) {
         findWebElement(locator).sendKeys(keys);
+    }
+
+    public void clearKeysFromElement(By locator) {
+        findWebElement(locator).clear();
     }
 
     public boolean isElementEnabled(By locator) {

@@ -5,7 +5,6 @@ import defaults.Constants;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -17,13 +16,16 @@ public class HomePage extends WebPage {
         super(test);
     }
 
-    public void pickOptionsFromSelects() {
+    public void pickOptionsFromSelects(boolean random) {
         List<WebElement> selects = findWebElements(Constants.FILTERS_SELECTS);
         executeJavaScript("document.querySelectorAll(\"" + Constants.FILTERS_SELECTS_CSS_LOCATOR + "\").forEach(elem => { elem.style.display = \"initial\" });");
         for (WebElement selectElement: selects) {
             Select selectObject = new Select(selectElement);
             int randomIndex = rand.nextInt(selectObject.getOptions().size() - 1) + 1;
-            selectObject.selectByIndex(randomIndex);
+            if (random)
+                selectObject.selectByIndex(randomIndex);
+            else
+                selectObject.selectByIndex(2);
         }
     }
 
