@@ -32,7 +32,7 @@ public class Utils {
 
     public static String getCurrentTimestamp() {
         LocalDateTime currentTimestamp = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy_HH:mm:ss");
         return currentTimestamp.format(formatter);
     }
 }

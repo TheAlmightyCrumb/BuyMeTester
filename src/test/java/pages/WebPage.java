@@ -1,14 +1,23 @@
 package pages;
 
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import defaults.DriverSingleton;
+import defaults.Utils;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class WebPage implements CanInteract {
-    private WebDriver driver = DriverSingleton.getDriver();
+    private final WebDriver driver = DriverSingleton.getDriver();
+    private final ExtentTest test;
+
+    public WebPage(ExtentTest test) {
+        this.test = test;
+    }
 
     public void clickElement(By locator) {
         findWebElement(locator).click();
@@ -50,10 +59,26 @@ public class WebPage implements CanInteract {
         return destinationFile.getName();
     }
 
+    public List<WebElement> findWebElements(By locator) {
+        try {
+            return driver.findElements(locator);
+        } catch(NoSuchElementException e) {
+            e.printStackTrace();
+            test.fail(e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot(Utils.getCurrentTimestamp() + "NoSuchElement", "png"))
+                            .build());
+        }
+        return null;
+    }
+
     private WebElement findWebElement(By locator) {
         try {
             return driver.findElement(locator);
         } catch(NoSuchElementException e) {
+            e.printStackTrace();
+            test.fail(e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(takeScreenshot(Utils.getCurrentTimestamp() + "NoSuchElement", "png"))
+                    .build());
         }
         return null;
     }
